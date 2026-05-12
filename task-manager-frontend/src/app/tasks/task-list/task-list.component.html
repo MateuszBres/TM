@@ -1,0 +1,66 @@
+<mat-card>
+<h2>My tasks</h2>
+
+<div class="toolbar">
+    <div class="filters">
+      <button mat-stroked-button (click)="filterBystatus('TODO')">TODO</button>
+      <button mat-stroked-button (click)="filterBystatus('IN_PROGRESS')">IN PROGRESS</button>
+      <button mat-stroked-button (click)="filterBystatus('DONE')">DONE</button>
+    </div>
+
+    <button mat-raised-button color="primary" routerLink="/addTask">Dodaj zadanie</button>
+    <button mat-raised-button routerLink="/password">Zmień hasło</button>
+  </div>
+<table mat-table [dataSource]="tasks" class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Tytuł</th>
+        <td mat-cell *matCellDef="let task">{{task.title}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Opis</th>
+        <td mat-cell matc *matCellDef="let task">
+            <span class="description-cell"  matTooltip="{{ task.description }}">
+             {{task.description}}
+            </span> 
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let task">{{task.status}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dueDate" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="dueDate">Data</th>
+        <td mat-cell *matCellDef="let task">{{task.dueDate}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Usuń</th>
+        <td mat-cell *matCellDef="let task">
+            <button mat-button (click)="deleteTask(task.id)">Usuń</button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>Edytuj</th>
+        <td mat-cell *matCellDef="let task">
+            <button mat-button (click)="edit(task)">Edytuj</button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns:displayedColumns"></tr>
+</table>
+
+<mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5,10,20]"
+    showFirstLastButtons
+    (page)="onPageChange($event)"
+    [class.hide]="totalElements <= pageSize">
+    
+</mat-paginator>
+</mat-card>

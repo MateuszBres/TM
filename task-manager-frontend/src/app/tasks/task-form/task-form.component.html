@@ -1,0 +1,42 @@
+<mat-card style="max-width: 400px; margin: 3rem auto; padding: 2rem;">
+    <h2>Dodaj Zadanie</h2>
+<form class="add-form" [formGroup]="addForm" (ngSubmit)="addTask()" >
+    <mat-form-field>
+        <mat-label>Tytuł</mat-label>
+        <input matInput type="text" formControlName="title">
+        <mat-error *ngIf="addForm.get('title')?.hasError('required') && addForm.get('title')?.touched ">
+            Pole jest wymagane
+        </mat-error>
+        <mat-error *ngIf="addForm.get('title')?.hasError('minlength') && addForm.get('title')?.touched">
+            Tutuł musi miec co najmniej 3 znaki
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Opis</mat-label>
+        <textarea matInput type="text" formControlName="description"></textarea>
+        <mat-error *ngIf="addForm.get('description')?.hasError('maxlength')" >
+            Maksymalna długość opisu to 500 znaków
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dueDate" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+        <mat-error *ngIf="addForm.get('dueDate')?.hasError('pastDate')">
+            data nie moze byc z przeszłości
+        </mat-error>
+        
+        <mat-error *ngIf="addForm.get('dueDate')?.hasError('required')">
+            Pole jest wymagane
+        </mat-error>
+    </mat-form-field>
+
+ 
+    <button mat-raised-button [disabled]="addForm.invalid">Dodaj</button>
+
+</form>
+</mat-card>

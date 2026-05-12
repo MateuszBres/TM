@@ -1,0 +1,19 @@
+<mat-card style="max-width: 400px; margin: 3rem auto ; padding: 2rem;">
+    <h2>Logowanie</h2>
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field>
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" formControlName="email"/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Hasło</mat-label>
+            <input matInput type="password" formControlName="password"/>
+        </mat-form-field>
+        
+    <button mat-raised-button type="submit" >Zaloguj</button>
+   
+
+
+</form>
+ <button mat-raised-button type="button" routerLink="/register">Zarejestruj sie </button>
+</mat-card>

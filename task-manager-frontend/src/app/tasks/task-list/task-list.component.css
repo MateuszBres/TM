@@ -1,0 +1,54 @@
+h2{
+    text-align: center;
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+table{
+  table-layout: fixed;
+  width: 100%;
+}
+
+.mat-column-title{
+  width: 25%;
+}
+
+.mat-column-description{
+  width: 35%;
+}
+
+.description-cell{
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-column-status{
+  width: 150px;
+}
+
+.mat-column-dueDate{
+  width: 150px;
+}
+
+.mat-column-actions{
+  width: 100px;
+}
+
+.mat-column-edit{
+  width: 100px;
+}
+
+.hide {
+  display: none;
+}
