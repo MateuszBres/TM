@@ -9,4 +9,5 @@
   "BAD_REQUEST": "Nieprawidłowe żądanie",
   "USER_ALREADY_EXISTS": "Użytkownik już istnieje",
   "INTERNAL_ERROR": "Wystąpił błąd serwera. Spróbuj ponownie później",
+  "AUTHENTICATION_ERROR": "Sesja wygasła. Zaloguj się ponownie"
   }

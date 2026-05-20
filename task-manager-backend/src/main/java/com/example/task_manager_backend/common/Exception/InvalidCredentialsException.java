@@ -1,20 +1,11 @@
 package com.example.task_manager_backend.common.Exception;
 
-public class InvalidCredentialsException extends RuntimeException{
+public class InvalidCredentialsException extends AppException{
 
-    private final ErrorCode errorCode;
 
-    public InvalidCredentialsException(){
-        super("Invalid credentials");
-        this.errorCode = ErrorCode.INVALID_CREDENTIALS;
-    }
 
-    public InvalidCredentialsException(String message){
+    public InvalidCredentialsException(String message) {
         super(message);
-        this.errorCode = ErrorCode.INVALID_CREDENTIALS;
-    }
 
-    public ErrorCode getErrorCode() {
-        return errorCode;
     }
 }

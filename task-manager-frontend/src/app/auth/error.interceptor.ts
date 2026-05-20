@@ -6,7 +6,6 @@ import { SnackbarService } from '../core/snackbar.service';
 interface ApiError {
   status: number;
   message: string;
-  errorCode: string;
 }
 
 const ERROR_MESSAGES: Record<string, string> = {
@@ -23,7 +22,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   INTERNAL_ERROR: 'Wystąpił błąd serwera. Spróbuj ponownie później',
   NETWORK_ERROR: 'Brak połączenia z serwerem. Sprawdź połączenie internetowe',
   CLIENT_ERROR: 'Wystąpił błąd. Sprawdź wprowadzone dane',
-  SERVER_ERROR: 'Wystąpił błąd serwera. Spróbuj ponownie później'
+  SERVER_ERROR: 'Wystąpił błąd serwera. Spróbuj ponownie później',
+  AUTHENTICATION_ERROR: 'Sesja wygasła. Zaloguj się ponownie',
 };
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
@@ -38,19 +38,19 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if (err.status === 401 && PUBLIC_ENDPOINTS.some(url => req.url.includes(url))) {
-        const apiError = err.error && typeof err.error === 'object' && 'errorCode' in err.error
+        const apiError = err.error && typeof err.error === 'object' && 'message' in err.error
           ? err.error as ApiError
           : null;
         const friendlyMessage = apiError
-          ? ERROR_MESSAGES[apiError.errorCode] || apiError.message || 'Wystąpił błąd'
+          ? ERROR_MESSAGES[apiError.message] || apiError.message || 'Wystąpił błąd'
           : 'Brak autoryzacji';
         snack.error(friendlyMessage);
         return throwError(() => err);
       }
 
-      if (err.error && typeof err.error === 'object' && 'errorCode' in err.error) {
+      if (err.error && typeof err.error === 'object' && 'message' in err.error) {
         const apiError = err.error as ApiError;
-        const friendlyMessage = ERROR_MESSAGES[apiError.errorCode] || apiError.message || 'Wystąpił błąd';
+        const friendlyMessage = ERROR_MESSAGES[apiError.message] || apiError.message || 'Wystąpił błąd';
         snack.error(friendlyMessage);
       } else if (err.status >= 400 && err.status < 500) {
         const message = ERROR_MESSAGES['CLIENT_ERROR'];

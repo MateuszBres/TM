@@ -1,6 +1,7 @@
 package com.example.task_manager_backend.task;
 
 import com.example.task_manager_backend.common.Exception.AppException;
+import com.example.task_manager_backend.common.Exception.TaskNotFoundException;
 import com.example.task_manager_backend.task.dto.CreateTaskRequest;
 import com.example.task_manager_backend.task.dto.PatchTaskRequest;
 import com.example.task_manager_backend.task.dto.TaskResponse;
@@ -41,7 +42,7 @@ public class TaskService {
 
     public Task getTaskById (Long id, User user){
         return taskRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new AppException("TASK_NOT_FOUND"));
+                .orElseThrow(() -> new TaskNotFoundException("TASK_NOT_FOUND"));
     }
 
 
@@ -61,7 +62,7 @@ public class TaskService {
     public TaskResponse updateTask(Long id, PatchTaskRequest req, User user ){
 
         Task task = taskRepository.findByIdAndUser(id,user).orElseThrow(()->
-                new AppException("TASK_NOT_FOUND"));
+                new TaskNotFoundException("TASK_NOT_FOUND"));
 
         if(req.title() != null){
             task.setTitle(req.title());

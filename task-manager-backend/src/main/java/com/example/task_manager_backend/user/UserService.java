@@ -20,7 +20,7 @@ public class UserService {
 
     public User addUser(RegisterRequest request){
         if(userRepository.existsByEmail(request.email())) {
-                throw new AppException("USER_ALREADY_EXISTS");
+                throw new UserAlreadyExists("USER_ALREADY_EXISTS");
         }
 
         User user = new User();

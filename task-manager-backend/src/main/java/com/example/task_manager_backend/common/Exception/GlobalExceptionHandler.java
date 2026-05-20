@@ -17,74 +17,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleException(Exception e) {
 
 
-//        if (e instanceof MethodArgumentNotValidException validationEx) {
-//            String message = validationEx.getBindingResult()
-//                    .getFieldErrors()
-//                    .stream()
-//                    .map(FieldError::getDefaultMessage)
-//                    .collect(Collectors.joining(", "));
-//
-//            return build(
-//                    HttpStatus.BAD_REQUEST,
-//                    message,
-//                    ErrorCode.VALIDATION_ERROR.getCode()
-//            );
-//        }
-//
-//        if (e instanceof InvalidCredentialsException ex) {
-//            return build(
-//                    HttpStatus.UNAUTHORIZED,
-//                    ex.getMessage() != null ? ex.getMessage() : "Invalid credentials",
-//                    ex.getErrorCode().getCode()
-//            );
-//        }
-//
-//        if (e instanceof UserNotFoundException ex) {
-//            return build(
-//                    HttpStatus.NOT_FOUND,
-//                    e.getMessage(),
-//                    ex.getErrorCode().getCode()
-//            );
-//        }
-//
-//        if (e instanceof TaskNotFoundException ex) {
-//            return build(
-//                    HttpStatus.NOT_FOUND,
-//                    e.getMessage(),
-//                    ex.getErrorCode().getCode()
-//            );
-//        }
-//
-//        if(e instanceof UserAlreadyExists ex){
-//            return build(
-//                    HttpStatus.CONFLICT,
-//                    e.getMessage(),
-//                    "BAD_REQUEST"
-//            );
-//        }
-//
-//        if (e instanceof BadRequestException ex) {
-//            return build(
-//                    HttpStatus.BAD_REQUEST,
-//                    e.getMessage(),
-//                    ex.getErrorCode()
-//            );
-//        }
-//
-//        return build(
-//                HttpStatus.INTERNAL_SERVER_ERROR,
-//                "Coś poszło nie tak",
-//                ErrorCode.INTERNAL_ERROR.getCode()
-//        );
         if(e instanceof AppException ex) {
             return build(
                     HttpStatus.NOT_FOUND,
-                    ex.errorCode()
+                    ex.getMessage()
             );
         }
         return build(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                ErrorCode.INTERNAL_ERROR.getCode()
+                e.getMessage() != null ? e.getMessage() : "INTERNAL_SERVER_ERROR"
         );
     }
 

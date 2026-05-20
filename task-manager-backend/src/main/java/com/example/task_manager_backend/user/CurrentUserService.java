@@ -20,7 +20,7 @@ public class CurrentUserService {
         assert auth != null;
         String email = auth.getName();
         return userRepository.findUserByEmail(email)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(()->new UserNotFoundException("USER_NOT_FOUND"));
     }
     public UserResponse getCurrentUserResponse(){
         User user = getCurrentUser();

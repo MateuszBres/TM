@@ -36,11 +36,11 @@ export class TranslationService {
     }
   }
 
-  getErrorMessage(errorCode: string): string {
+  getErrorMessage(message: string): string {
     if (!this.loaded) {
       return 'Wystąpił błąd';
     }
-    return this.translations[errorCode] || 'Wystąpił błąd';
+    return this.translations[message] || 'Wystąpił błąd';
   }
 
   getErrorMessages(): Record<string, string> {
