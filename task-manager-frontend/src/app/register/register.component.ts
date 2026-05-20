@@ -38,10 +38,7 @@ export class RegisterComponent {
     this.service.register(this.registerForm.getRawValue()).subscribe({next:() =>{
       this.snack.success("Dodano użytkownika"),
       this.router.navigateByUrl("/login")
-    },error:err =>{
-      this.snack.error(err.error?.messsage);
-    }
-  });
+    }});
   }
 
 }

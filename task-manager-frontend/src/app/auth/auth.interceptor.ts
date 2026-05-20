@@ -12,9 +12,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
 
-  const  PUBLIC_ENDPOINTS = ['/login', '/register'];
+  const PUBLIC_ENDPOINTS = ['/login', '/register', '/api/login', '/api/register'];
 
-  if(PUBLIC_ENDPOINTS.some(url => req.url.includes(url))){
+  if (PUBLIC_ENDPOINTS.some(url => req.url.includes(url))) {
     return next(req);
   }
 

@@ -1,0 +1,12 @@
+{
+  "USER_NOT_FOUND": "Nie znaleziono użytkownika",
+  "TASK_NOT_FOUND": "Nie znaleziono zadania",
+  "INVALID_CREDENTIALS": "Nieprawidłowe dane logowania",
+  "INVALID_PASSWORD": "Nieprawidłowe hasło",
+  "INVALID_CURRENT_PASSWORD": "Nieprawidłowe aktualne hasło",
+  "PASSWORD_NOT_SAME": "Hasła nie sa takie same",
+  "PASSWORD_SAME_AS_OLD": "Nowe hasło nie może być takie samo jak stare",
+  "BAD_REQUEST": "Nieprawidłowe żądanie",
+  "USER_ALREADY_EXISTS": "Użytkownik już istnieje",
+  "INTERNAL_ERROR": "Wystąpił błąd serwera. Spróbuj ponownie później",
+  }

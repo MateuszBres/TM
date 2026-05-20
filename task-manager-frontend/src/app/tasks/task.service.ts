@@ -27,7 +27,7 @@ export interface TaskRequest{
 })
 export class TaskService {
 
-  private API = 'http://localhost:8080/tasks';
+  private API = '/api/tasks';
 
   constructor(private http: HttpClient) { }
 

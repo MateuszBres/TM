@@ -42,10 +42,6 @@ constructor(
         this.snack.success('Zalogowano')
         this.router.navigateByUrl('/tasks');
       }
-      ,
-      error:() =>{
-         this.snack.error("zle dane logowania ");
-      }
     });
   }
 }

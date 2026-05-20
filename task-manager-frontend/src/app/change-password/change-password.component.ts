@@ -32,6 +32,7 @@ export class ChangePasswordComponent {
     confirmPassword:['',[Validators.required]]
   },{
     validators: passwordMatchValidator
+  
   }
 );
   }
@@ -47,10 +48,8 @@ export class ChangePasswordComponent {
   changePassword(){
     if(this.passwordForm.invalid) return
     this.service.changePassword(this.passwordForm.getRawValue()).subscribe({next:
-      (res: any)=>{
-        this.snack.success(res.message ?? "Zmieniono hasło");
-      },error: err =>{
-        this.snack.error(err?.error.message ?? "Błąd podczas zmiany hasła")
+      ()=>{
+        this.snack.success("Zmieniono hasło");
       }
     })
   }

@@ -1,0 +1,63 @@
+mat-card {
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+mat-card-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th.mat-mdc-header-cell {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 16px;
+}
+
+td.mat-mdc-cell {
+  padding: 16px;
+  font-size: 14px;
+}
+
+tr.mat-mdc-row:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: 0.2s;
+}
+
+.mat-column-id {
+  width: 80px;
+}
+
+.mat-column-role {
+  width: 140px;
+  font-weight: 600;
+}
+
+.mat-column-createdAt {
+  width: 220px;
+}
+
+@media (max-width: 768px) {
+
+  mat-card {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  th.mat-mdc-header-cell,
+  td.mat-mdc-cell {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  mat-card-title {
+    font-size: 22px;
+  }
+}

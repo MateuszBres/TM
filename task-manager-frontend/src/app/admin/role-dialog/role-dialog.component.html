@@ -1,0 +1,25 @@
+<h2>Zmień rolę</h2>
+
+<form [formGroup]="form">
+
+  <mat-radio-group formControlName="role">
+
+    <mat-radio-button value="USER">
+      USER
+    </mat-radio-button>
+
+    <br>
+
+    <mat-radio-button value="ADMIN">
+      ADMIN
+    </mat-radio-button>
+
+  </mat-radio-group>
+
+  <div class="actions">
+    <button mat-button (click)="save()">
+      Zapisz
+    </button>
+  </div>
+
+</form>

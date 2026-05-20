@@ -26,16 +26,15 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
         String message;
 
-        if(e instanceof BadCredentialsException) {
-            message = "Złe dane logowania";
-        } else if (e instanceof InsufficientAuthenticationException) {
-            message = "Brak lub niepoprawny token";
-        } else{
-            message = "Brak autoryzacji";
-            message = "Brak autoryzacji";
-        }
+//        if(e instanceof BadCredentialsException) {
+//            message = "Złe dane logowania";
+//        } else if (e instanceof InsufficientAuthenticationException) {
+//            message = "Brak lub niepoprawny token";
+//        } else{
+//            message = "Brak autoryzacji";
+//        }
 
-        ApiError apiError = new ApiError(401, message);
+        ApiError apiError = new ApiError(401, "AUTHENTICATION_ERROR");
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(apiError));
     }

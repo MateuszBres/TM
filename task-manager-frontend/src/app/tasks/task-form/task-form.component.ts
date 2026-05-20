@@ -12,6 +12,7 @@ import { SnackbarService } from '../../core/snackbar.service';
 import { successResponse } from '../../successResponse';
 import { futureOrPresentValidator } from '../date-validators';
 import { TaskService } from '../task.service';
+import { formatDateForApi } from '../date-utils';
 
 @Component({
   selector: 'app-task-form',
@@ -46,25 +47,17 @@ export class TaskFormComponent {
   
     const raw = this.addForm.getRawValue();
 
-  const payload = {
-    ...raw,
-    dueDate: raw.dueDate ? this.formatDate(raw.dueDate) : null
-  };
+    const payload = {
+      ...raw,
+      dueDate: formatDateForApi(raw.dueDate)
+    };
 
      this.taskService.create(payload).subscribe({
-      next: (res: successResponse) => {
-      this.snack.success(res.message ?? "Dodano"); 
-      this.addForm.reset();
-    }, error:(err) =>{
-      this.snack.error(err.error?.message ?? "Błąd podczas dodawania zadania");
-    }
-  });
-  }
-
- private formatDate(date: Date): string {
-    return `${date.getFullYear()}-${(date.getMonth()+1)
-      .toString().padStart(2,'0')}-${date.getDate()
-      .toString().padStart(2,'0')}`;
+      next: () => {
+        this.snack.success(`Dodano zadanie: ${raw.title}`);
+        this.addForm.reset();
+      }
+    });
   }
 
 }

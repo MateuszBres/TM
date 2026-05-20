@@ -1,5 +1,8 @@
 package com.example.task_manager_backend.user;
 
+import com.example.task_manager_backend.common.Exception.AppException;
+import com.example.task_manager_backend.common.Exception.BadRequestException;
+import com.example.task_manager_backend.common.Exception.UserAlreadyExists;
 import com.example.task_manager_backend.user.model.Role;
 import com.example.task_manager_backend.user.model.User;
 import com.example.task_manager_backend.auth.dto.RegisterRequest;
@@ -17,7 +20,7 @@ public class UserService {
 
     public User addUser(RegisterRequest request){
         if(userRepository.existsByEmail(request.email())) {
-                throw new IllegalArgumentException("Email exist");
+                throw new AppException("USER_ALREADY_EXISTS");
         }
 
         User user = new User();

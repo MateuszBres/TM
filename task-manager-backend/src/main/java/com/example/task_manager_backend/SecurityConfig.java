@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .exceptionHandling(ex ->ex
                         .authenticationEntryPoint(jwtAuthEntryPoint))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/register").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/login","/api/register").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sess ->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -8,43 +8,91 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
 
+import org.springframework.validation.FieldError;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleValidation( MethodArgumentNotValidException e){
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleException(Exception e) {
 
-        String message = e.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
-        return build(HttpStatus.BAD_REQUEST, message);
+
+//        if (e instanceof MethodArgumentNotValidException validationEx) {
+//            String message = validationEx.getBindingResult()
+//                    .getFieldErrors()
+//                    .stream()
+//                    .map(FieldError::getDefaultMessage)
+//                    .collect(Collectors.joining(", "));
+//
+//            return build(
+//                    HttpStatus.BAD_REQUEST,
+//                    message,
+//                    ErrorCode.VALIDATION_ERROR.getCode()
+//            );
+//        }
+//
+//        if (e instanceof InvalidCredentialsException ex) {
+//            return build(
+//                    HttpStatus.UNAUTHORIZED,
+//                    ex.getMessage() != null ? ex.getMessage() : "Invalid credentials",
+//                    ex.getErrorCode().getCode()
+//            );
+//        }
+//
+//        if (e instanceof UserNotFoundException ex) {
+//            return build(
+//                    HttpStatus.NOT_FOUND,
+//                    e.getMessage(),
+//                    ex.getErrorCode().getCode()
+//            );
+//        }
+//
+//        if (e instanceof TaskNotFoundException ex) {
+//            return build(
+//                    HttpStatus.NOT_FOUND,
+//                    e.getMessage(),
+//                    ex.getErrorCode().getCode()
+//            );
+//        }
+//
+//        if(e instanceof UserAlreadyExists ex){
+//            return build(
+//                    HttpStatus.CONFLICT,
+//                    e.getMessage(),
+//                    "BAD_REQUEST"
+//            );
+//        }
+//
+//        if (e instanceof BadRequestException ex) {
+//            return build(
+//                    HttpStatus.BAD_REQUEST,
+//                    e.getMessage(),
+//                    ex.getErrorCode()
+//            );
+//        }
+//
+//        return build(
+//                HttpStatus.INTERNAL_SERVER_ERROR,
+//                "Coś poszło nie tak",
+//                ErrorCode.INTERNAL_ERROR.getCode()
+//        );
+        if(e instanceof AppException ex) {
+            return build(
+                    HttpStatus.NOT_FOUND,
+                    ex.errorCode()
+            );
+        }
+        return build(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ErrorCode.INTERNAL_ERROR.getCode()
+        );
     }
 
-    @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<ApiError> handleInvalidCredentials(
-            InvalidCredentialsException e) {
-        return build(HttpStatus.UNAUTHORIZED, e.getMessage());
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException e) {
-        return build(HttpStatus.NOT_FOUND, e.getMessage());
-    }
-
-    @ExceptionHandler(TaskNotFoundException.class)
-    public ResponseEntity<ApiError> handleTaskNotFound(TaskNotFoundException e){
-        return build(HttpStatus.NOT_FOUND, e.getMessage());
-    }
-
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiError> handleBadRequest(BadRequestException e){
-        return build(HttpStatus.BAD_REQUEST, e.getMessage());
-    }
-
-    public ResponseEntity<ApiError> build (HttpStatus http, String message){
-        return ResponseEntity.status(http)
-                .body(new ApiError(http.value(),message));
+    private ResponseEntity<ApiError> build(
+            HttpStatus status,
+            String errorCode
+    ) {
+        return ResponseEntity.status(status)
+                .body(new ApiError(status.value(), errorCode));
     }
 }

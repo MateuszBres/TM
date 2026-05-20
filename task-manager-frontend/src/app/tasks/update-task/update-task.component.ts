@@ -10,7 +10,7 @@ import { MatError, MatFormField, MatLabel, MatSuffix } from "@angular/material/f
 import { MatInput } from "@angular/material/input";
 import { MatOption, MatSelect } from "@angular/material/select";
 import { SnackbarService } from '../../core/snackbar.service';
-import { futureOrPresentValidator } from '../date-validators';
+import { futureOrPresentUnlessOriginalValidator } from '../date-validators';
 import { Task } from '../task';
 
 @Component({
@@ -32,19 +32,30 @@ export class UpdateTaskComponent {
     private dialoRef: MatDialogRef<UpdateTaskComponent>,
     private snack: SnackbarService
   ){
+    const originalDueDate = task.dueDate ? new Date(task.dueDate) : null;
+
     this.updateForm = this.fb.nonNullable.group({
       title:['', [Validators.required, Validators.minLength(3)]],
       description:['', [Validators.maxLength(500)]],
       status:['', [Validators.required]],
-      dueDate:['', [Validators.required, futureOrPresentValidator]]
-    })
-    this.updateForm.patchValue(task);
+      dueDate:['', [Validators.required, futureOrPresentUnlessOriginalValidator(originalDueDate)]]
+    });
+
+    this.updateForm.patchValue({
+      ...task,
+      dueDate: task.dueDate ? new Date(task.dueDate) : null
+    });
   }
 
   update(){
     
     if(this.updateForm.invalid){
       this.snack.info("Uzupełnij wszystkie pola")
+      return;
+    }
+
+    if(this.updateForm.pristine){
+      this.dialoRef.close();
       return;
     }
     
@@ -55,6 +66,6 @@ export class UpdateTaskComponent {
 
 
   cancel(){
-    this.dialoRef.close;
+    this.dialoRef.close();
   }
 }

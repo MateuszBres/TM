@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import {  MatButtonModule } from '@angular/material/button';
 import {  MatCardModule } from "@angular/material/card";
 import { Page, Task } from '../task';
+import { formatDateForApi } from '../date-utils';
 
 import { UpdateTaskComponent } from '../update-task/update-task.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +16,7 @@ import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../../auth/auth.service';
 
 
 @Component({
@@ -50,10 +52,14 @@ export class TaskListComponent implements AfterViewInit {
   constructor(
     private taskService: TaskService,
     private snack: SnackbarService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public auth: AuthService
   ){}
 
   ngAfterViewInit(): void {
+    this.auth.getMe().subscribe({
+      error: () => {}
+    });
     this.loadTask();
 
     this.paginator.page.subscribe(()=>{
@@ -83,7 +89,7 @@ export class TaskListComponent implements AfterViewInit {
       next: (page: Page<Task>) =>{
       this.tasks = page.content;
       this.totalElements = page.totalElements;
-    },error: ()=> this.snack.error("Bład pobierania zadan")});
+    }});
     
   }
 
@@ -100,12 +106,13 @@ export class TaskListComponent implements AfterViewInit {
   deleteTask(id: number){
     return this.taskService.delete(id).subscribe(() =>{
       this.tasks = this.tasks.filter(t => t.id !==id);
-      this.snack.info("usunieto zadanie");
+      this.snack.info("Usunięto zadanie");
       this.loadTask();
     })
   }
 
   edit(task: Task){
+
     
     this.dialog
   .open(UpdateTaskComponent, {
@@ -119,16 +126,14 @@ export class TaskListComponent implements AfterViewInit {
 
   const payload = {
     ...raw,
-    dueDate: raw.dueDate ? this.formatDate(raw.dueDate) : null
+      dueDate: formatDateForApi(raw.dueDate)
   };
-
-    this.taskService.update(task.id, payload).subscribe({next:(res: successResponse)=>{
-      this.snack.info(res.message ?? "Zadanie zaktualizowane");
-      this.loadTask();
-    },error:(err:any) =>{
-      this.snack.error(err.error?.message ?? "Bląd aktualizacji");
-    }
-  });
+    this.taskService.update(task.id, payload).subscribe({
+      next: () => {
+        this.snack.info("Zadanie zaktualizowane");
+        this.loadTask();
+      }
+    });
   });
   
 }
@@ -139,14 +144,4 @@ export class TaskListComponent implements AfterViewInit {
     this.loadTask();
   }
 
- private formatDate(date: Date | string) {
-    const parsedDate = typeof date === 'string' ? new Date(date) : date;
-    if (isNaN(parsedDate.getTime())) {
-      return '';
-    }
-
-    return `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1)
-      .toString().padStart(2,'0')}-${parsedDate.getDate()
-      .toString().padStart(2,'0')}`;
-  }
 }

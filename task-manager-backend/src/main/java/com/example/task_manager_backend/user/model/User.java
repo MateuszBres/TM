@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Table(name = "accounts")
 @Data
@@ -19,10 +20,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(name ="created_at")
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDate.now();
     }
 
 }
