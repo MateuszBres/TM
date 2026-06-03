@@ -1,10 +1,8 @@
-package com.example.task_manager_backend.task.dto;
-
-import com.example.task_manager_backend.task.model.TaskStatus;
+package com.example.task_manager_backend.task;
 
 import java.time.LocalDate;
 
-public record PatchTaskRequest(
+record PatchTaskRequest(
         String title,
         String description,
         TaskStatus status,

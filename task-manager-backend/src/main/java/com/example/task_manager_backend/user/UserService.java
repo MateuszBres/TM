@@ -1,26 +1,20 @@
 package com.example.task_manager_backend.user;
 
-import com.example.task_manager_backend.common.Exception.AppException;
-import com.example.task_manager_backend.common.Exception.BadRequestException;
 import com.example.task_manager_backend.common.Exception.UserAlreadyExists;
-import com.example.task_manager_backend.user.model.Role;
-import com.example.task_manager_backend.user.model.User;
-import com.example.task_manager_backend.auth.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-
-public class UserService {
+class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User addUser(RegisterRequest request){
-        if(userRepository.existsByEmail(request.email())) {
-                throw new UserAlreadyExists("USER_ALREADY_EXISTS");
+    User addUser(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new UserAlreadyExists("USER_ALREADY_EXISTS");
         }
 
         User user = new User();

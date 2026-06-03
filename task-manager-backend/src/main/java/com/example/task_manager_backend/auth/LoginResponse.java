@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.auth.dto;
+package com.example.task_manager_backend.auth;
 
-public record LoginResponse(String token) {
+record LoginResponse(String token) {
 }

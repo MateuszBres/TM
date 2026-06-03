@@ -26,9 +26,11 @@ export class ChangePasswordComponent {
 ){
   this.passwordForm = this.fb.nonNullable.group({
     currentPassword:['',[Validators.required]],
-    newPassword:['',[Validators.required, Validators.minLength(8),
+    newPassword:[
+      '',[Validators.required, Validators.minLength(8),
       Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*?]).+$/)
-        ]],
+        ]
+      ],
     confirmPassword:['',[Validators.required]]
   },{
     validators: passwordMatchValidator

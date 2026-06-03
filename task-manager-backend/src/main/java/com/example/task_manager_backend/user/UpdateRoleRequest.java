@@ -1,6 +1,6 @@
-package com.example.task_manager_backend.user.model;
+package com.example.task_manager_backend.user;
 
-public record UpdateRoleRequest(
+record UpdateRoleRequest(
         Role role
 ) {
 }

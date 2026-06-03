@@ -1,8 +1,8 @@
-package com.example.task_manager_backend.user.model;
+package com.example.task_manager_backend.user;
 
 import java.time.LocalDate;
 
-public record UserResponse(
+record UserResponse(
         Long id,
         String email,
         Role role,

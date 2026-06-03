@@ -1,6 +1,5 @@
-package com.example.task_manager_backend.task.dto;
+package com.example.task_manager_backend.task;
 
-import com.example.task_manager_backend.task.model.TaskStatus;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public record CreateTaskRequest(
+record CreateTaskRequest(
         @NotBlank
         @Size(min = 3, message = "tytul musi miec co najmniej 3 znaki")
         String title,

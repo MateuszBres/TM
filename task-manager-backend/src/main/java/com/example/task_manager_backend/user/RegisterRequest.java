@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.auth;
+package com.example.task_manager_backend.user;
 
 
 import jakarta.validation.constraints.Email;
@@ -13,7 +13,7 @@ record RegisterRequest(
         @Size(min = 8, message = "Password must be at least 8 characters")
         @NotBlank
         @Pattern(regexp = "^(?=.*[A-Z])(?=.*[\\d])(?=.*[!@#$%^&*?].+$)",
-        message = "Password must contains uppercase, number and special characters")
+                message = "Password must contains uppercase, number and special characters")
         String password
 ) {
 }

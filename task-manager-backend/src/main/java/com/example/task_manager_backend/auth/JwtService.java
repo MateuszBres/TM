@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.auth.security;
+package com.example.task_manager_backend.auth;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -11,20 +11,20 @@ import java.security.Key;
 import java.util.Date;
 
 @Service
-public class JwtService {
+class JwtService {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    public String generateToken(UserDetails user){
+    String generateToken(UserDetails user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis()+ 1000 * 60 *60))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getKey())
                 .compact();
     }
 
-    public String ExtractUsername(String token){
+    String ExtractUsername(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
                 .build()
@@ -34,9 +34,7 @@ public class JwtService {
     }
 
 
-
-
-    private Key getKey(){
+    private Key getKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 }

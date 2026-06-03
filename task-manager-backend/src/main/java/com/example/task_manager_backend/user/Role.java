@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.user.model;
+package com.example.task_manager_backend.user;
 
 public enum Role {
     USER,

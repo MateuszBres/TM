@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.user.model;
+package com.example.task_manager_backend.user;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,8 +19,9 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @Column(name ="created_at")
+    @Column(name = "created_at")
     private LocalDate createdAt;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDate.now();

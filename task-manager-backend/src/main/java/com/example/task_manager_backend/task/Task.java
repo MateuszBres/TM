@@ -1,16 +1,15 @@
-package com.example.task_manager_backend.task.model;
+package com.example.task_manager_backend.task;
 
-import com.example.task_manager_backend.user.model.User;
+import com.example.task_manager_backend.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
 @Data
-public class Task {
+class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

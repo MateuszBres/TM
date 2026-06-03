@@ -1,82 +1,99 @@
 package com.example.task_manager_backend.task;
 
-import com.example.task_manager_backend.common.Exception.AppException;
 import com.example.task_manager_backend.common.Exception.TaskNotFoundException;
-import com.example.task_manager_backend.task.dto.CreateTaskRequest;
-import com.example.task_manager_backend.task.dto.PatchTaskRequest;
-import com.example.task_manager_backend.task.dto.TaskResponse;
-import com.example.task_manager_backend.task.model.Task;
-import com.example.task_manager_backend.task.model.TaskStatus;
-import com.example.task_manager_backend.user.model.User;
+import com.example.task_manager_backend.user.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class TaskService {
+class TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserFacade userFacade;
 
-    public List<TaskResponse> getAllTask(User user){
-         return taskRepository.findAllByUser(user)
-                 .stream()
-                 .map(TaskMapper::toResponse)
-                 .toList();
+    Page<TaskResponse> getTasks(
+            TaskStatus status,
+            int page,
+            int size,
+            String sortBy,
+            String direction
+    ) {
+        Sort sort;
+
+        try {
+            sort = Sort.by(
+                    Sort.Direction.fromString(direction),
+                    sortBy
+            );
+        } catch (IllegalArgumentException e) {
+            sort = Sort.by(Sort.Direction.DESC, "dueDate");
+        }
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                sort
+        );
+
+        return getTaskPageAndStatus(
+                status,
+                pageable
+        );
     }
 
-    public Page<TaskResponse> getTaskPageAndStatus(User user, TaskStatus status, Pageable pageable){
+    Page<TaskResponse> getTaskPageAndStatus(TaskStatus status, Pageable pageable) {
         Page<Task> tasks;
 
-        if(status !=null){
-            tasks = taskRepository.findAllByUserAndStatus(user,status,pageable);
-        }else{
-            tasks = taskRepository.findAllByUser(user,pageable);
+        if (status != null) {
+            tasks = taskRepository.findAllByUserAndStatus(userFacade.getCurrentUser(), status, pageable);
+        } else {
+            tasks = taskRepository.findAllByUser(userFacade.getCurrentUser(), pageable);
         }
 
         return tasks.map(TaskMapper::toResponse);
     }
 
-    public Task getTaskById (Long id, User user){
-        return taskRepository.findByIdAndUser(id, user)
+    Task getTaskById(Long id) {
+        return taskRepository.findByIdAndUser(id, userFacade.getCurrentUser())
                 .orElseThrow(() -> new TaskNotFoundException("TASK_NOT_FOUND"));
     }
 
 
-    public TaskResponse createTask(CreateTaskRequest req, User user){
+    TaskResponse createTask(CreateTaskRequest req) {
         Task task = new Task();
         task.setTitle(req.title());
         task.setDescription(req.description());
         task.setStatus(TaskStatus.TODO);
         task.setDueDate(req.dueDate());
-        task.setUser(user);
+        task.setUser(userFacade.getCurrentUser());
         task.onCreate();
         taskRepository.save(task);
         return TaskMapper.toResponse(task);
 
     }
 
-    public TaskResponse updateTask(Long id, PatchTaskRequest req, User user ){
-
-        Task task = taskRepository.findByIdAndUser(id,user).orElseThrow(()->
+    TaskResponse updateTask(Long id, PatchTaskRequest req) {
+        Task task = taskRepository.findByIdAndUser(id, userFacade.getCurrentUser()).orElseThrow(() ->
                 new TaskNotFoundException("TASK_NOT_FOUND"));
 
-        if(req.title() != null){
+        if (req.title() != null) {
             task.setTitle(req.title());
         }
 
-        if(req.description() != null){
+        if (req.description() != null) {
             task.setDescription(req.description());
         }
 
-        if(req.status() != null){
+        if (req.status() != null) {
             task.setStatus(req.status());
         }
 
-        if(req.dueDate() != null){
+        if (req.dueDate() != null) {
             task.setDueDate(req.dueDate());
         }
 
@@ -86,8 +103,8 @@ public class TaskService {
 
     }
 
-    public void deleteTask (Long id, User user){
-        Task task = getTaskById(id, user);
+    void deleteTask(Long id) {
+        Task task = getTaskById(id);
         taskRepository.delete(task);
     }
 }

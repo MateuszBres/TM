@@ -1,11 +1,9 @@
-package com.example.task_manager_backend.task.dto;
-
-import com.example.task_manager_backend.task.model.TaskStatus;
+package com.example.task_manager_backend.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record TaskResponse(
+record TaskResponse(
         Long id,
         String title,
         String description,
@@ -13,5 +11,5 @@ public record TaskResponse(
         LocalDate dueDate,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
-){
+) {
 }

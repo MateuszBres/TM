@@ -2,13 +2,8 @@ package com.example.task_manager_backend.common.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.stream.Collectors;
-
-import org.springframework.validation.FieldError;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -17,9 +12,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleException(Exception e) {
 
 
-        if(e instanceof AppException ex) {
+        if (e instanceof AppException ex) {
             return build(
-                    HttpStatus.NOT_FOUND,
+                    HttpStatus.UNPROCESSABLE_CONTENT,
                     ex.getMessage()
             );
         }
