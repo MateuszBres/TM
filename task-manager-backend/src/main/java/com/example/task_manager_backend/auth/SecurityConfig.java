@@ -1,7 +1,7 @@
 package com.example.task_manager_backend;
 
-import com.example.task_manager_backend.auth.security.JwtAuthEntryPoint;
-import com.example.task_manager_backend.auth.security.JwtAuthenticationFilter;
+import com.example.task_manager_backend.auth.JwtAuthEntryPoint;
+import com.example.task_manager_backend.auth.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
