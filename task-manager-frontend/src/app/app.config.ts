@@ -19,9 +19,9 @@ import {
 } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
+import { errorInterceptor } from './core/error.interceptor';
 
 
-import { errorInterceptor } from './auth/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
 

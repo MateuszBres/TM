@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SnackbarService } from '../core/snackbar.service';
-import { AuthService } from '../auth/auth.service';
+import { SnackbarService } from '../../../core/snackbar.service';
+import { AuthService } from '../../../core/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCard } from "@angular/material/card";
 import { MatFormField, MatLabel, MatError } from "@angular/material/form-field";

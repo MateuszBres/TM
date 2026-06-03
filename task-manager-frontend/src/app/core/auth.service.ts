@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
-import { userResponse } from '../admin/admin.service';
+import { userResponse } from '../modules/admin/admin.service';
 
 interface LoginRequest{
   email:string;

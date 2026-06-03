@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { TaskResponse, TaskService, TaskStatus } from '../task.service';
 import { RouterLink} from "@angular/router";
-import { SnackbarService } from '../../core/snackbar.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 import { MatTableModule } from '@angular/material/table';
 import {  MatButtonModule } from '@angular/material/button';
 import {  MatCardModule } from "@angular/material/card";
@@ -10,13 +9,14 @@ import { formatDateForApi } from '../date-utils';
 
 import { UpdateTaskComponent } from '../update-task/update-task.component';
 import { MatDialog } from '@angular/material/dialog';
-import { successResponse } from '../../successResponse';
+import { successResponse } from '../../../core/successResponse';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortHeader, MatSortModule } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../../core/auth.service';
+import { TaskResponse, TaskService, TaskStatus } from '../task.service';
 
 
 @Component({
@@ -32,7 +32,7 @@ import { AuthService } from '../../auth/auth.service';
 export class TaskListComponent implements AfterViewInit {
 
   tasks: TaskResponse[] = [];
-  selectedStatus: TaskStatus | null = null;
+  selectedStatus: TaskStatus   | null = null;
   totalElements = 0;
   pageSize = 5;
   

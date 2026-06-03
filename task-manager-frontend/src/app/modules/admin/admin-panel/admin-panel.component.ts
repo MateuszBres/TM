@@ -5,8 +5,8 @@ import { MatCard, MatCardTitle} from "@angular/material/card";
 import { MatButton } from "@angular/material/button";
 import { MatDialog } from '@angular/material/dialog';
 import { RoleDialogComponent } from '../role-dialog/role-dialog.component';
-import { SnackbarService } from '../../core/snackbar.service';
-import { successResponse } from '../../successResponse';
+import { SnackbarService } from '../../../core/snackbar.service';
+import { successResponse } from '../../../core/successResponse';
 @Component({
   selector: 'app-admin-panel',
   imports: [MatTableModule, MatCellDef, MatHeaderCellDef, MatHeaderRowDef, MatRowDef, MatCard,

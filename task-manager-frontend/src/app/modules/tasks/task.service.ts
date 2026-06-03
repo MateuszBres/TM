@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { successResponse } from '../successResponse';
-import { Page, Task } from './task';
+import { successResponse } from '../../core/successResponse';
+import { Page } from './task';
 
 export type TaskStatus = "TODO" | "IN_PROGRESS" | "DONE";
 
@@ -43,7 +43,7 @@ export class TaskService {
       params += `&status=${status}`;
     }
    
-    return this.http.get<Page<Task>>
+    return this.http.get<Page<TaskResponse>>
     (`${this.API}${params}`);
   }
 

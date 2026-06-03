@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { SnackbarService } from '../core/snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 interface ApiError {
   status: number;

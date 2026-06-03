@@ -4,10 +4,10 @@ import { MatButton } from "@angular/material/button";
 import { MatCard } from "@angular/material/card";
 import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
-import { AuthService } from '../auth/auth.service';
-import { SnackbarService } from '../core/snackbar.service';
+import { AuthService } from '../../../core/auth.service';
+import { SnackbarService } from '../../../core/snackbar.service';
 import { NgIf } from '@angular/common';
-import { passwordMatchValidator } from '../validators/password-marches.validator';
+import { passwordMatchValidator } from '../password-marches.validator';
 
 @Component({
   selector: 'app-change-password',
