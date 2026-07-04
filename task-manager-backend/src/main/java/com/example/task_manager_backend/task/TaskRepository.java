@@ -1,5 +1,6 @@
 package com.example.task_manager_backend.task;
 
+import com.example.task_manager_backend.task.dto.TaskStatus;
 import com.example.task_manager_backend.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

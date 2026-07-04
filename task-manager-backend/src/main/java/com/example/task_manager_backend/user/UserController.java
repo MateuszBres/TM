@@ -2,6 +2,8 @@ package com.example.task_manager_backend.user;
 
 import com.example.task_manager_backend.common.Exception.SuccessResponse;
 
+import com.example.task_manager_backend.user.dto.RegisterRequest;
+import com.example.task_manager_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,8 @@ class UserController {
     private final CurrentUserService currentUserService;
 
     @GetMapping("/me")
-    ResponseEntity<UserResponse> getCurrentUser() {
-        return ResponseEntity.ok(currentUserService.getCurrentUserResponse());
+    ResponseEntity<User> getCurrentUser() {
+        return ResponseEntity.ok(currentUserService.getCurrentUser());
     }
 
     @PostMapping("/register")

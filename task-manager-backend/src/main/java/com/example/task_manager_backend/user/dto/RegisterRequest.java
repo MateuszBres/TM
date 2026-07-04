@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.user;
+package com.example.task_manager_backend.user.dto;
 
 
 import jakarta.validation.constraints.Email;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-record RegisterRequest(
+public record RegisterRequest(
         @Email
         @NotBlank
         String email,

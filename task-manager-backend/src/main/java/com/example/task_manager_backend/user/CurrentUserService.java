@@ -1,6 +1,7 @@
 package com.example.task_manager_backend.user;
 
 import com.example.task_manager_backend.common.Exception.UserNotFoundException;
+import com.example.task_manager_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

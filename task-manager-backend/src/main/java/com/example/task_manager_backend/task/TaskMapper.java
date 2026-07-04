@@ -1,5 +1,7 @@
 package com.example.task_manager_backend.task;
 
+import com.example.task_manager_backend.task.dto.TaskResponse;
+
 class TaskMapper{
 
     static TaskResponse toResponse(Task task){

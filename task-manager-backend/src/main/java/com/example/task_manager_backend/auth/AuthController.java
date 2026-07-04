@@ -1,5 +1,8 @@
 package com.example.task_manager_backend.auth;
 
+import com.example.task_manager_backend.auth.dto.ChangePasswordRequest;
+import com.example.task_manager_backend.auth.dto.LoginRequest;
+import com.example.task_manager_backend.auth.dto.LoginResponse;
 import com.example.task_manager_backend.common.Exception.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

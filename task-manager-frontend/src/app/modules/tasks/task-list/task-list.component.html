@@ -1,5 +1,5 @@
 <mat-card>
-<h2>My tasks</h2>
+<h2>Moje zadania</h2>
 
 <div class="toolbar">
     <div class="filters">
@@ -8,7 +8,10 @@
       <button mat-stroked-button (click)="filterBystatus('DONE')">DONE</button>
     </div>
 
-    <button mat-raised-button *ngIf="auth.isAdmin()"  color="primary" routerLink="/admin">Panel admina</button>
+    <!-- <button mat-raised-button 
+    *ngIf="auth.isAdmin()"  
+     color="primary" routerLink="/admin">Dodaj Zadanie</button> -->
+     <button mat-raised-button color="primary" routerLink="/addTask">Dodaj Zadanie</button>
   </div>
 <table mat-table [dataSource]="tasks" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="title">

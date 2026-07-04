@@ -1,6 +1,7 @@
 package com.example.task_manager_backend.user;
 
 import com.example.task_manager_backend.common.Exception.UserAlreadyExists;
+import com.example.task_manager_backend.user.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

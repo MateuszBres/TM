@@ -1,5 +1,7 @@
 package com.example.task_manager_backend.auth;
 
+import com.example.task_manager_backend.auth.dto.ChangePasswordRequest;
+import com.example.task_manager_backend.auth.dto.LoginRequest;
 import com.example.task_manager_backend.common.Exception.InvalidCredentialsException;
 import com.example.task_manager_backend.common.Exception.PasswordException;
 import com.example.task_manager_backend.user.User;

@@ -1,6 +1,8 @@
 package com.example.task_manager_backend.user;
 
 import com.example.task_manager_backend.common.Exception.SuccessResponse;
+import com.example.task_manager_backend.user.dto.UpdateRoleRequest;
+import com.example.task_manager_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

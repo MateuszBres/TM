@@ -3,6 +3,8 @@ package com.example.task_manager_backend.user;
 
 import com.example.task_manager_backend.common.Exception.UserAlreadyExists;
 import com.example.task_manager_backend.common.Exception.UserNotFoundException;
+import com.example.task_manager_backend.user.dto.UpdateRoleRequest;
+import com.example.task_manager_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

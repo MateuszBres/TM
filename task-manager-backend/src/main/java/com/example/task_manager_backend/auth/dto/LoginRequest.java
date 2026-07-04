@@ -1,9 +1,9 @@
-package com.example.task_manager_backend.auth;
+package com.example.task_manager_backend.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-record LoginRequest(
+public record LoginRequest(
         @Email
         @NotBlank
         String email,

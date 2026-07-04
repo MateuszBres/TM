@@ -1,10 +1,10 @@
-package com.example.task_manager_backend.auth;
+package com.example.task_manager_backend.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-record ChangePasswordRequest(
+public record ChangePasswordRequest(
         String currentPassword,
         @Size(min = 8, message = "Password must be at least 8 characters")
         @NotBlank

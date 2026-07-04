@@ -1,9 +1,9 @@
-package com.example.task_manager_backend.task;
+package com.example.task_manager_backend.task.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-record TaskResponse(
+public record TaskResponse(
         Long id,
         String title,
         String description,

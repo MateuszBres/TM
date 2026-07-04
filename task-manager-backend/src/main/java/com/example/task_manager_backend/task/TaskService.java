@@ -1,7 +1,12 @@
 package com.example.task_manager_backend.task;
 
+import com.example.task_manager_backend.auth.CurrentUser;
 import com.example.task_manager_backend.common.Exception.TaskNotFoundException;
-import com.example.task_manager_backend.user.UserFacade;
+import com.example.task_manager_backend.task.dto.CreateTaskRequest;
+import com.example.task_manager_backend.task.dto.PatchTaskRequest;
+import com.example.task_manager_backend.task.dto.TaskResponse;
+import com.example.task_manager_backend.task.dto.TaskStatus;
+import com.example.task_manager_backend.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,12 +19,12 @@ import org.springframework.stereotype.Service;
 class TaskService {
 
     private final TaskRepository taskRepository;
-    private final UserFacade userFacade;
 
     Page<TaskResponse> getTasks(
             TaskStatus status,
             int page,
             int size,
+            User user,
             String sortBy,
             String direction
     ) {
@@ -41,45 +46,46 @@ class TaskService {
         );
 
         return getTaskPageAndStatus(
+                user,
                 status,
                 pageable
         );
     }
 
-    Page<TaskResponse> getTaskPageAndStatus(TaskStatus status, Pageable pageable) {
+    Page<TaskResponse> getTaskPageAndStatus(User user, TaskStatus status, Pageable pageable) {
         Page<Task> tasks;
 
         if (status != null) {
-            tasks = taskRepository.findAllByUserAndStatus(userFacade.getCurrentUser(), status, pageable);
+            tasks = taskRepository.findAllByUserAndStatus(user,status, pageable);
         } else {
-            tasks = taskRepository.findAllByUser(userFacade.getCurrentUser(), pageable);
+            tasks = taskRepository.findAllByUser(user,pageable);
         }
 
         return tasks.map(TaskMapper::toResponse);
     }
 
-    Task getTaskById(Long id) {
-        return taskRepository.findByIdAndUser(id, userFacade.getCurrentUser())
+    Task getTaskById(User user,Long id) {
+        return taskRepository.findByIdAndUser(id,user)
                 .orElseThrow(() -> new TaskNotFoundException("TASK_NOT_FOUND"));
     }
 
 
-    TaskResponse createTask(CreateTaskRequest req) {
+    TaskResponse createTask(CreateTaskRequest req, User user) {
         Task task = new Task();
         task.setTitle(req.title());
         task.setDescription(req.description());
         task.setStatus(TaskStatus.TODO);
         task.setDueDate(req.dueDate());
-        task.setUser(userFacade.getCurrentUser());
+        task.setUser(user);
         task.onCreate();
         taskRepository.save(task);
         return TaskMapper.toResponse(task);
 
     }
 
-    TaskResponse updateTask(Long id, PatchTaskRequest req) {
-        Task task = taskRepository.findByIdAndUser(id, userFacade.getCurrentUser()).orElseThrow(() ->
-                new TaskNotFoundException("TASK_NOT_FOUND"));
+    TaskResponse updateTask(User user,Long id, PatchTaskRequest req) {
+        Task task = taskRepository.findByIdAndUser(id,user)
+                .orElseThrow(() -> new TaskNotFoundException("TASK_NOT_FOUND"));
 
         if (req.title() != null) {
             task.setTitle(req.title());
@@ -103,8 +109,8 @@ class TaskService {
 
     }
 
-    void deleteTask(Long id) {
-        Task task = getTaskById(id);
+    void deleteTask(User user,Long id) {
+        Task task = getTaskById(user,id);
         taskRepository.delete(task);
     }
 }
