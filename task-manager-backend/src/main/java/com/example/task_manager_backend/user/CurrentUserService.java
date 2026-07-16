@@ -1,7 +1,7 @@
 package com.example.task_manager_backend.user;
 
-import com.example.task_manager_backend.common.Exception.UserNotFoundException;
-import com.example.task_manager_backend.user.dto.UserResponse;
+import com.example.task_manager_backend.Exception.UserNotFoundException;
+import com.example.task_manager_backend.user.dto.CurrentUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +22,8 @@ class CurrentUserService {
                 .orElseThrow(() -> new UserNotFoundException("USER_NOT_FOUND"));
     }
 
-    UserResponse getCurrentUserResponse() {
+    CurrentUserDto getCurrentUserResponse() {
         User user = getCurrentUser();
-        return new UserResponse(user.getId(), user.getEmail(), user.getRole(), user.getCreatedAt());
+        return new CurrentUserDto(user.getId());
     }
 }

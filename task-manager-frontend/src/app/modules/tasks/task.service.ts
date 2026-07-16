@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { successResponse } from '../../core/successResponse';
 import { Page } from './task';
 
-export type TaskStatus = "TODO" | "IN_PROGRESS" | "DONE";
+export type TaskStatus = 'TODO' | 'IN_PROGRESS' | 'DONE';
 
-export interface TaskResponse{
+export interface TaskResponse {
   id: number;
   title: string;
   description?: string;
@@ -13,51 +13,49 @@ export interface TaskResponse{
   dueDate: string;
 }
 
-export interface TaskRequest{
+export interface TaskRequest {
   title: string;
   description?: string;
   status: TaskStatus;
   dueDate: string;
 }
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
-
   private API = '/api/tasks';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getAll(){
+  getAll() {
     return this.http.get<TaskResponse[]>(this.API);
   }
 
-  
-  getPageAndStatus(page:number, size: number, sort: string, direction: string, status: TaskStatus | null){
-
+  getPageAndStatus(
+    page: number,
+    size: number,
+    sort: string,
+    direction: string,
+    status: TaskStatus | null,
+  ) {
     let params = `?page=${page}&size=${size}&sort=${sort}&direction=${direction}`;
-    if(status){
+    if (status) {
       params += `&status=${status}`;
     }
-   
-    return this.http.get<Page<TaskResponse>>
-    (`${this.API}${params}`);
+
+    return this.http.get<Page<TaskResponse>>(`${this.API}${params}`);
   }
 
-  create(req: TaskRequest){
-    return this.http.post<successResponse>(this.API,req);
+  create(req: TaskRequest) {
+    return this.http.post<successResponse>(this.API, req);
   }
 
-  update(id: number,req: TaskRequest){
-    return this.http.patch<successResponse>(`${this.API}/${id}`,req);
-    
+  update(id: number, req: TaskRequest) {
+    return this.http.patch<successResponse>(`${this.API}/${id}`, req);
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.http.delete(`${this.API}/${id}`);
   }
-
 }

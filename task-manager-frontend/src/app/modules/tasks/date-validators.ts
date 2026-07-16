@@ -1,6 +1,8 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function futureOrPresentValidator(control: AbstractControl): ValidationErrors | null {
+export function futureOrPresentValidator(
+  control: AbstractControl,
+): ValidationErrors | null {
   if (!control.value) return null;
 
   const today = new Date();
@@ -12,7 +14,9 @@ export function futureOrPresentValidator(control: AbstractControl): ValidationEr
   return selected < today ? { pastDate: true } : null;
 }
 
-export function futureOrPresentUnlessOriginalValidator(originalDate: Date | string | null): ValidatorFn {
+export function futureOrPresentUnlessOriginalValidator(
+  originalDate: Date | string | null,
+): ValidatorFn {
   const original = originalDate ? new Date(originalDate) : null;
   if (original && !isNaN(original.getTime())) {
     original.setHours(0, 0, 0, 0);

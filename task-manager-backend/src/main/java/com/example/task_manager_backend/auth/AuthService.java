@@ -1,11 +1,11 @@
 package com.example.task_manager_backend.auth;
 
+import com.example.task_manager_backend.Exception.InvalidCredentialsException;
+import com.example.task_manager_backend.Exception.PasswordException;
 import com.example.task_manager_backend.auth.dto.ChangePasswordRequest;
 import com.example.task_manager_backend.auth.dto.LoginRequest;
-import com.example.task_manager_backend.common.Exception.InvalidCredentialsException;
-import com.example.task_manager_backend.common.Exception.PasswordException;
-import com.example.task_manager_backend.user.User;
 import com.example.task_manager_backend.user.UserFacade;
+import com.example.task_manager_backend.user.dto.CustomUserDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,17 +23,17 @@ class AuthService {
 
 
     String login(LoginRequest loginRequest) {
-        User user = userFacade.getUserByEmail(loginRequest.email());
+        CustomUserDetailsDto user = userFacade.getUserDetailsByEmail(loginRequest.email());
 
 
-        if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.password(), user.password())) {
             throw new InvalidCredentialsException("INVALID_CREDENTIALS");
         }
 
         return jwtService.generateToken(org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
+                .withUsername(user.email())
+                .password(user.password())
+                .roles(user.role().name())
                 .build());
 
     }
@@ -41,10 +41,10 @@ class AuthService {
     void changePassword(ChangePasswordRequest req) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
-        User user = userFacade.getUserByEmail(email);
+        CustomUserDetailsDto user = userFacade.getUserDetailsByEmail(email);
 
 
-        if (!passwordEncoder.matches(req.currentPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(req.currentPassword(), user.password())) {
             throw new PasswordException("INVALID_CURRENT_PASSWORD");
         }
 
@@ -52,7 +52,7 @@ class AuthService {
             throw new PasswordException("PASSWORD_NOT_SAME");
         }
 
-        if (passwordEncoder.matches(req.newPassword(), user.getPassword())) {
+        if (passwordEncoder.matches(req.newPassword(), user.password())) {
             throw new PasswordException("PASSWORD_SAME_AS_OLD");
         }
 

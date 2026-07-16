@@ -1,7 +1,8 @@
 package com.example.task_manager_backend.auth;
 
-import com.example.task_manager_backend.user.User;
+
 import com.example.task_manager_backend.user.UserFacade;
+import com.example.task_manager_backend.user.dto.CurrentUserDto;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.core.MethodParameter;
@@ -15,20 +16,25 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-  private final UserFacade userFacade;
+    private final UserFacade userFacade;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(CurrentUser.class) &&
-                parameter.getParameterType().equals(User.class);
+                (parameter.getParameterType().equals(CurrentUserDto.class) ||
+                        parameter.getParameterType().equals(CurrentUserDto.class));
     }
 
     @Override
-    public @Nullable User resolveArgument(MethodParameter parameter,
-                                            @Nullable ModelAndViewContainer mavContainer,
-                                            NativeWebRequest webRequest,
-                                            @Nullable WebDataBinderFactory binderFactory)
+    public @Nullable CurrentUserDto resolveArgument(MethodParameter parameter,
+                                                    @Nullable ModelAndViewContainer mavContainer,
+                                                    NativeWebRequest webRequest,
+                                                    @Nullable WebDataBinderFactory binderFactory)
             throws Exception {
-        return userFacade.getCurrentUser();
+        CurrentUserDto user = userFacade.getCurrentUserDto();
+        if (parameter.getParameterType().equals(CurrentUserDto.class)) {
+            return new CurrentUserDto(user.id());
+        }
+        return user;
     }
 }

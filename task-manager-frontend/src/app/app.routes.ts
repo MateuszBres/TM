@@ -12,19 +12,31 @@ import { adminGuard } from './core/admin.guard';
 import { LayoutComponent } from './layout/layout/layout.component';
 
 export const routes: Routes = [
-   {
+  {
     path: '',
     component: LayoutComponent,
     children: [
-  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+      { path: '', redirectTo: 'tasks', pathMatch: 'full' },
 
-  { path: 'tasks', component: TaskListComponent, canActivate: [authGuard] },
-  { path: 'addTask', component: TaskFormComponent, canActivate: [authGuard] },
-  { path: 'password', component: ChangePasswordComponent, canActivate: [authGuard] },
-  { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
-    ]
+      { path: 'tasks', component: TaskListComponent, canActivate: [authGuard] },
+      {
+        path: 'addTask',
+        component: TaskFormComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'password',
+        component: ChangePasswordComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'admin',
+        component: AdminPanelComponent,
+        canActivate: [adminGuard],
+      },
+    ],
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'login' },
 ];

@@ -3,79 +3,72 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { userResponse } from '../modules/admin/admin.service';
 
-interface LoginRequest{
-  email:string;
-  password:string;
+interface LoginRequest {
+  email: string;
+  password: string;
 }
 
-interface RegisterRequest{
-  email:string;
-  password:string;
+interface RegisterRequest {
+  email: string;
+  password: string;
 }
 
-interface changePasswordReques{
-  currentPassowrd:string;
-  newPassword:string;
-  confirmPassword:string;
+interface changePasswordReques {
+  currentPassowrd: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
-interface LoginResponse{
-  token:string;
+interface LoginResponse {
+  token: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private API = '/api';
-  currentUser?:userResponse;
-  
+  currentUser?: userResponse;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getMe(){
+  getMe() {
     return this.http.get<userResponse>(`${this.API}/me`).pipe(
-      tap(user =>{
+      tap((user) => {
         this.currentUser = user;
-      })
+      }),
     );
   }
 
-  isAdmin(): boolean{
+  isAdmin(): boolean {
     return this.currentUser?.role === 'ADMIN';
   }
 
-  login(request: LoginRequest){
-    return this.http.post<LoginResponse>(
-      `${this.API}/login`,
-      request)
-      .pipe(
-        tap(response =>{
-          localStorage.setItem('token', response.token);
-        })
-
-      );
+  login(request: LoginRequest) {
+    return this.http.post<LoginResponse>(`${this.API}/login`, request).pipe(
+      tap((response) => {
+        localStorage.setItem('token', response.token);
+      }),
+    );
   }
 
-  register(req: RegisterRequest){
+  register(req: RegisterRequest) {
     return this.http.post(`${this.API}/register`, req);
   }
 
-  changePassword(req: changePasswordReques){
-    return this.http.post(`${this.API}/password`,req)
+  changePassword(req: changePasswordReques) {
+    return this.http.post(`${this.API}/password`, req);
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('token');
   }
 
-  isLoggedIn(): boolean{
-    return !!localStorage.getItem('token')
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 
-  getToken(){
+  getToken() {
     return localStorage.getItem('token');
   }
-
 }

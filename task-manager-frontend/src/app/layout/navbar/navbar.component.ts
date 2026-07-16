@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-navbar',
@@ -15,30 +16,27 @@ import { CommonModule } from '@angular/common';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatToolbarModule,
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-
   isAdmin = false;
 
   constructor(
     public auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-
-    this.auth.getMe().subscribe(user =>{
-        this.isAdmin = user.role === 'ADMIN';
-    })
-
+    this.auth.getMe().subscribe((user) => {
+      this.isAdmin = user.role === 'ADMIN';
+    });
   }
 
   logout() {
-
     this.auth.logout();
 
     this.router.navigate(['/login']);

@@ -1,7 +1,7 @@
 package com.example.task_manager_backend.auth;
 
-import com.example.task_manager_backend.user.User;
 import com.example.task_manager_backend.user.UserFacade;
+import com.example.task_manager_backend.user.dto.CustomUserDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,11 +15,11 @@ class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        User user = userFacade.getUserByEmail(email);
+        CustomUserDetailsDto user = userFacade.getUserDetailsByEmail(email);
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
+                .withUsername(user.email())
+                .password(user.password())
+                .roles(user.role().name())
                 .build();
     }
 }

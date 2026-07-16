@@ -1,10 +1,10 @@
-package com.example.task_manager_backend.task;
+package com.example.task_manager_backend.task.domain;
 
 import com.example.task_manager_backend.task.dto.TaskResponse;
 
-class TaskMapper{
+public class TaskMapper {
 
-    static TaskResponse toResponse(Task task){
+    public static TaskResponse toResponse(Task task) {
         return new TaskResponse(
                 task.getId(),
                 task.getTitle(),

@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../core/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { MatCard } from '@angular/material/card';
@@ -12,36 +17,39 @@ import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCard,
-  MatFormField, MatInput, MatLabel, MatButton,RouterModule
-
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCard,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatButton,
+    RouterModule,
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
-
-  
   loginForm: FormGroup;
-constructor(
+  constructor(
     private fb: FormBuilder,
     private auth: AuthService,
     private router: Router,
-    private snack: SnackbarService
-  ){
-  this.loginForm = this.fb.nonNullable.group({
-    email: ['',[ Validators.required]],
-    password:['',[Validators.required]]
-  })}
+    private snack: SnackbarService,
+  ) {
+    this.loginForm = this.fb.nonNullable.group({
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
 
-  
-
-  login(){
+  login() {
     this.auth.login(this.loginForm.getRawValue()).subscribe({
-      next:() => {
-        this.snack.success('Zalogowano')
+      next: () => {
+        this.snack.success('Zalogowano');
         this.router.navigateByUrl('/tasks');
-      }
+      },
     });
   }
 }

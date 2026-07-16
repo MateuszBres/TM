@@ -1,12 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from "@angular/material/button";
-import { MatCard } from "@angular/material/card";
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormField, MatLabel, MatSuffix } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
+import {
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SnackbarService } from '../../../core/snackbar.service';
 import { successResponse } from '../../../core/successResponse';
@@ -18,47 +27,52 @@ import { TaskService } from '../task.service';
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCard, MatFormField,
-    MatLabel, MatInput, MatSelectModule, MatButton, MatDatepickerModule,
-    MatSuffix,MatNativeDateModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCard,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelectModule,
+    MatButton,
+    MatDatepickerModule,
+    MatSuffix,
+    MatNativeDateModule,
+  ],
   templateUrl: './task-form.component.html',
-  styleUrl: './task-form.component.css'
+  styleUrl: './task-form.component.css',
 })
 export class TaskFormComponent {
-
-  
   addForm: FormGroup;
 
   constructor(
     private taskService: TaskService,
     private fb: FormBuilder,
-    private snack: SnackbarService
-  ){
+    private snack: SnackbarService,
+  ) {
     this.addForm = this.fb.nonNullable.group({
-    title: ['', [Validators.required,Validators.minLength(3)]],
-    description: ['', [Validators.maxLength(500)]],
-    dueDate: [null, [Validators.required, futureOrPresentValidator]]
-  })
-
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.maxLength(500)]],
+      dueDate: [null, [Validators.required, futureOrPresentValidator]],
+    });
   }
 
-  addTask(){
+  addTask() {
+    if (this.addForm.invalid) return;
 
-    if(this.addForm.invalid) return;
-  
     const raw = this.addForm.getRawValue();
 
     const payload = {
       ...raw,
-      dueDate: formatDateForApi(raw.dueDate)
+      dueDate: formatDateForApi(raw.dueDate),
     };
 
-     this.taskService.create(payload).subscribe({
+    this.taskService.create(payload).subscribe({
       next: () => {
         this.snack.success(`Dodano zadanie: ${raw.title}`);
         this.addForm.reset();
-      }
+      },
     });
   }
-
 }

@@ -19,14 +19,14 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
-  if (!PUBLIC_ENDPOINTS.some(url => req.url.includes(url))) {
+  if (!PUBLIC_ENDPOINTS.some((url) => req.url.includes(url))) {
     const token = auth.getToken();
 
     if (token) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
     }
   }
@@ -47,6 +47,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       snack.error(message);
       console.log(message);
       return throwError(() => err);
-    })
+    }),
   );
 };

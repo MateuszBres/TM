@@ -1,9 +1,9 @@
 package com.example.task_manager_backend.auth;
 
+import com.example.task_manager_backend.Exception.SuccessResponse;
 import com.example.task_manager_backend.auth.dto.ChangePasswordRequest;
 import com.example.task_manager_backend.auth.dto.LoginRequest;
 import com.example.task_manager_backend.auth.dto.LoginResponse;
-import com.example.task_manager_backend.common.Exception.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +21,7 @@ class AuthController {
     ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest) {
         String token = authService.login(loginRequest);
         return ResponseEntity.ok(new LoginResponse(token));
+
     }
 
     @PostMapping("/password")

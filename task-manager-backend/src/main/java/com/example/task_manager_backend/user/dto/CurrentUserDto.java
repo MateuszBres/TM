@@ -1,6 +1,6 @@
 package com.example.task_manager_backend.user.dto;
 
-public record UpdateRoleRequest(
-        Role role
+public record CurrentUserDto(
+        Long id
 ) {
 }

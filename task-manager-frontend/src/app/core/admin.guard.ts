@@ -3,14 +3,12 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 
 export const adminGuard: CanActivateFn = () => {
-
   const auth = inject(AuthService);
-  const router = inject(Router)
+  const router = inject(Router);
 
-  if(auth.isAdmin()){
+  if (auth.isAdmin()) {
     return true;
-  } 
-    router.navigate(['/tasks']);
-    return false;
-  
+  }
+  router.navigate(['/tasks']);
+  return false;
 };

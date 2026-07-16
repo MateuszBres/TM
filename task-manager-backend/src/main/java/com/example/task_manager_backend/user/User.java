@@ -1,8 +1,8 @@
 package com.example.task_manager_backend.user;
 
+import com.example.task_manager_backend.user.dto.Role;
 import jakarta.persistence.*;
 import lombok.Data;
-
 
 import java.time.LocalDate;
 
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Table(name = "accounts")
 @Data
 @Entity
-public class User {
+class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

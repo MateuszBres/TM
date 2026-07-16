@@ -8,10 +8,6 @@
       <button mat-stroked-button (click)="filterBystatus('DONE')">DONE</button>
     </div>
 
-    <!-- <button mat-raised-button 
-    *ngIf="auth.isAdmin()"  
-     color="primary" routerLink="/admin">Dodaj Zadanie</button> -->
-     <button mat-raised-button color="primary" routerLink="/addTask">Dodaj Zadanie</button>
   </div>
 <table mat-table [dataSource]="tasks" class="mat-elevation-z8" matSort>
     <ng-container matColumnDef="title">

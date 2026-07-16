@@ -16,4 +16,5 @@ public record CreateTaskRequest(
         @NotNull
         @FutureOrPresent(message = "data nie może byc z przeszłości")
         LocalDate dueDate
-){}
+) {
+}

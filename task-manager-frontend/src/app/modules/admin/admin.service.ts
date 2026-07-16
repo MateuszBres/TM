@@ -11,11 +11,10 @@ interface userResponse {
 export type { userResponse };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdminService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private API = '/api';
 
@@ -23,15 +22,15 @@ export class AdminService {
     return this.http.get<userResponse[]>(`${this.API}/admin`);
   }
 
-  getUserById(id: number){
+  getUserById(id: number) {
     return this.http.get(`${this.API}/admin/${id}`);
   }
 
-  updateUserRole(id: number, role: string){
+  updateUserRole(id: number, role: string) {
     return this.http.patch(`${this.API}/admin/${id}`, { role });
   }
 
-  deleteUser(id: number){
+  deleteUser(id: number) {
     return this.http.delete(`${this.API}/admin/${id}`);
   }
 }

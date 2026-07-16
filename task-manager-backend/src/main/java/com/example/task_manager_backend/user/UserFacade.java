@@ -1,5 +1,7 @@
 package com.example.task_manager_backend.user;
 
+import com.example.task_manager_backend.user.dto.CurrentUserDto;
+import com.example.task_manager_backend.user.dto.CustomUserDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +16,16 @@ public class UserFacade {
         return currentUserService.getCurrentUser();
     }
 
-
-    public User getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
+    public CurrentUserDto getCurrentUserDto() {
+        return currentUserService.getCurrentUserResponse();
     }
 
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
+    public CustomUserDetailsDto getUserDetailsByEmail(String email) {
+        return userRepository.findUserDetailsByEmail(email)
                 .orElseThrow(() -> new RuntimeException("USER_NOT_FOUND"));
     }
+
 
     public void updatePassword(String encodedPassword) {
         User user = getCurrentUser();

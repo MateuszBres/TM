@@ -1,5 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
@@ -10,23 +15,22 @@ import { MatRadioModule } from '@angular/material/radio';
   imports: [
     ReactiveFormsModule,
     MatButtonModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogActions,
+    MatDialogModule,
   ],
   templateUrl: './role-dialog.component.html',
 })
 export class RoleDialogComponent {
-
   form;
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<RoleDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public currentRole: string
+    @Inject(MAT_DIALOG_DATA) public currentRole: string,
   ) {
-
     this.form = this.fb.nonNullable.group({
-      role: [currentRole]
-     
+      role: [currentRole],
     });
   }
 
