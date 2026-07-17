@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { of, tap } from 'rxjs';
 import { userResponse } from '../modules/admin/admin.service';
 
 interface LoginRequest {
@@ -40,9 +40,17 @@ export class AuthService {
     );
   }
 
-  isAdmin(): boolean {
-    return this.currentUser?.role === 'ADMIN';
+  loadCurrentUser() {
+  if (this.currentUser) {
+    return of(this.currentUser);
   }
+
+  return this.getMe();
+}
+
+  // isAdmin(): boolean {
+  //   return this.currentUser?.role === 'ADMIN';
+  // }
 
   login(request: LoginRequest) {
     return this.http.post<LoginResponse>(`${this.API}/login`, request).pipe(

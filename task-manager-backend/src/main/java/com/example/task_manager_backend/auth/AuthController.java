@@ -1,6 +1,6 @@
 package com.example.task_manager_backend.auth;
 
-import com.example.task_manager_backend.Exception.SuccessResponse;
+import com.example.task_manager_backend.exception.SuccessResponse;
 import com.example.task_manager_backend.auth.dto.ChangePasswordRequest;
 import com.example.task_manager_backend.auth.dto.LoginRequest;
 import com.example.task_manager_backend.auth.dto.LoginResponse;

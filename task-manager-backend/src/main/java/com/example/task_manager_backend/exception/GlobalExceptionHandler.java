@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.Exception;
+package com.example.task_manager_backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

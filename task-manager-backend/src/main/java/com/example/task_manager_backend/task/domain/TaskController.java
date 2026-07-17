@@ -1,6 +1,6 @@
 package com.example.task_manager_backend.task.domain;
 
-import com.example.task_manager_backend.Exception.SuccessResponse;
+import com.example.task_manager_backend.exception.SuccessResponse;
 import com.example.task_manager_backend.auth.CurrentUser;
 import com.example.task_manager_backend.task.dto.CreateTaskRequest;
 import com.example.task_manager_backend.task.dto.PatchTaskRequest;

@@ -1,6 +1,6 @@
-package com.example.task_manager_backend.user;
+package com.example.task_manager_backend.user.admin;
 
-import com.example.task_manager_backend.Exception.SuccessResponse;
+import com.example.task_manager_backend.exception.SuccessResponse;
 import com.example.task_manager_backend.user.dto.UpdateRoleRequest;
 import com.example.task_manager_backend.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ class AdminController {
     @PatchMapping("/{id}")
     ResponseEntity<SuccessResponse> updateStatus(@PathVariable Long id,
                                                  @RequestBody UpdateRoleRequest request) {
-        adminService.updateUser(id, request);
+        adminService.updateUserById(id, request);
         return ResponseEntity.ok(new SuccessResponse("USER_UPDATED"));
     }
 

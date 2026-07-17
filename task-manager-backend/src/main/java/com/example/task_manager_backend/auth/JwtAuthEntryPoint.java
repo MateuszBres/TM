@@ -1,6 +1,6 @@
 package com.example.task_manager_backend.auth;
 
-import com.example.task_manager_backend.Exception.ApiError;
+import com.example.task_manager_backend.exception.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;

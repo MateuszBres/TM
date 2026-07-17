@@ -1,6 +1,6 @@
 package com.example.task_manager_backend.task.domain;
 
-import com.example.task_manager_backend.Exception.TaskNotFoundException;
+import com.example.task_manager_backend.exception.TaskNotFoundException;
 import com.example.task_manager_backend.task.dto.CreateTaskRequest;
 import com.example.task_manager_backend.task.dto.PatchTaskRequest;
 import com.example.task_manager_backend.task.dto.TaskResponse;

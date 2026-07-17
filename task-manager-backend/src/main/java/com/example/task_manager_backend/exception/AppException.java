@@ -1,4 +1,4 @@
-package com.example.task_manager_backend.Exception;
+package com.example.task_manager_backend.exception;
 
 class AppException extends RuntimeException {
     AppException(String message) {
